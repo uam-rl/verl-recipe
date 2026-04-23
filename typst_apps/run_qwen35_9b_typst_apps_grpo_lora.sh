@@ -11,7 +11,6 @@ export HUGGINGFACE_HUB_CACHE="${HUGGINGFACE_HUB_CACHE:-${HF_HOME}/hub}"
 export WANDB_DIR="${WANDB_DIR:-/workspace/eval_results/wandb}"
 export HYDRA_FULL_ERROR="${HYDRA_FULL_ERROR:-1}"
 export VERL_FSDP_CKPT_OFFLOAD_TO_CPU="${VERL_FSDP_CKPT_OFFLOAD_TO_CPU:-1}"
-export PYTORCH_CUDA_ALLOC_CONF="${PYTORCH_CUDA_ALLOC_CONF:-expandable_segments:True}"
 mkdir -p "${WANDB_DIR}"
 
 TRAIN_FILES=${TRAIN_FILES:-/workspace/typst_apps_data/train.parquet}
