@@ -11,3 +11,4 @@
 - The next run defaults to `enable_gradient_checkpointing=False`, `enable_activation_offload=False`, and `ppo_micro_batch_size_per_gpu=2` / `log_prob_micro_batch_size_per_gpu=2`. That microbatch bump is the risky-but-still-plausible setting the user approved.
 - Detailed configs for the clean one-step checkpoint and the crashed resume attempt are recorded in `recipe/typst_apps/RUN_CONFIGS.md`.
 - For the actual long run after the Ray host-RAM crash, default rollout/reward worker fanout is reduced to 2/2 and validation generations are disabled (`TEST_FREQ=0`, `LOG_VAL_GENERATIONS=0`) to preserve host RAM.
+- The microbatch-2 long attempt OOMed during actor backward, so the long-run defaults are back to `ppo_micro_batch_size_per_gpu=1` and `log_prob_micro_batch_size_per_gpu=1`. `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` is exported before Python starts.

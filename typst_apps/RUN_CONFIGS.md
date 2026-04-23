@@ -55,5 +55,7 @@ This file records the two VERL configurations that matter for the next training 
 - The clean checkpoint is usable and has been exported as an adapter-only HF artifact.
 - The immediate bottleneck for the crashed resume is host RAM pressure during rollout worker fanout; lowering `AGENT_NUM_WORKERS` and `REWARD_NUM_WORKERS` is the first lever before changing sequence length.
 - The long run should use `AGENT_NUM_WORKERS=2`, `REWARD_NUM_WORKERS=2`, `TEST_FREQ=0`, and `LOG_VAL_GENERATIONS=0` unless there is enough host RAM headroom to turn validation generations back on.
+- The 2026-04-23 long attempt with update/logprob microbatch 2 completed step-1 rollout logging but OOMed during actor backward: the actor held about 76.45 GiB on GPU 0 and failed a 1.64 GiB allocation while vLLM was asleep at about 1.5 GiB. Revert update/logprob microbatch to 1.
+- Step-1 rollout stats from that failed attempt: 80 raw records, 68 normal stops, 12 length stops at the 32k cap, mean response length 17902.8 tokens, reward mean 0.0125.
 - Keep vLLM VRAM capped at 0.5 unless GPU memory telemetry proves there is headroom.
 - Keep checkpointing every step, but use adapter-only save contents to avoid writing full 9B shards.
