@@ -10,3 +10,4 @@
 - The adapter-only checkpoint path is now enabled in the launch script: save/load contents default to `["lora_model", "optimizer", "extra"]`, with `VERL_FSDP_CKPT_OFFLOAD_TO_CPU=1` by default so checkpointing can offload shards to CPU when needed.
 - The next run defaults to `enable_gradient_checkpointing=False`, `enable_activation_offload=False`, and `ppo_micro_batch_size_per_gpu=2` / `log_prob_micro_batch_size_per_gpu=2`. That microbatch bump is the risky-but-still-plausible setting the user approved.
 - Detailed configs for the clean one-step checkpoint and the crashed resume attempt are recorded in `recipe/typst_apps/RUN_CONFIGS.md`.
+- For the actual long run after the Ray host-RAM crash, default rollout/reward worker fanout is reduced to 2/2 and validation generations are disabled (`TEST_FREQ=0`, `LOG_VAL_GENERATIONS=0`) to preserve host RAM.
