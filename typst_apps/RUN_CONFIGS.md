@@ -60,3 +60,4 @@ This file records the two VERL configurations that matter for the next training 
 - Do not set `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` for this job. vLLM's CuMem memory pool asserts that expandable segments are incompatible and fails during engine startup.
 - Keep vLLM VRAM capped at 0.5 unless GPU memory telemetry proves there is headroom.
 - Keep checkpointing every step, but use adapter-only save contents to avoid writing full 9B shards.
+- The 2026-04-23 long attempt with update/logprob microbatch 1 and no gradient checkpointing completed all 80 step-1 rollout records, then OOMed during `actor_rollout_update_actor`. Failure was a 24 MiB allocation with only 18.69 MiB free on GPU 0; actor held 77.69 GiB and vLLM's sleeping worker still held 1.51 GiB. Next long run should enable gradient checkpointing while keeping microbatch 1, bf16, rank 64, response cap 32k, and save every step.
